@@ -58,6 +58,12 @@ async function getAgentRepo(agentId: string): Promise<{
   return { git: simpleGit(dir), dir };
 }
 
+const VALID_CATEGORIES = new Set(["notes", "interactions", "preferences"]);
+
+function safeCategory(category: string): string {
+  return VALID_CATEGORIES.has(category) ? category : "notes";
+}
+
 /**
  * Store a memory — appends to the appropriate markdown file and commits
  */
@@ -66,6 +72,7 @@ export async function storeMemory(
   content: string,
   category: string = "notes"
 ): Promise<{ success: boolean; file: string; timestamp: string }> {
+  category = safeCategory(category);
   const { git, dir } = await getAgentRepo(agentId);
   const timestamp = new Date().toISOString();
   const filename = `${category}.md`;
@@ -103,7 +110,7 @@ export async function searchMemory(
 
   const files = await readdir(dir);
   const mdFiles = files.filter((f) => f.endsWith(".md"));
-  const targetFiles = category ? [`${category}.md`] : mdFiles;
+  const targetFiles = category ? [`${safeCategory(category)}.md`] : mdFiles;
 
   for (const filename of targetFiles) {
     const filepath = join(dir, filename);

@@ -1,24 +1,28 @@
 {
   "name": "logia_memory",
-  "description": "Portable agent memory service. Use this tool to persistently store facts, recall past context by searching memories, or reflect on your full memory history. Memories are stored as version-controlled markdown files — portable, human-readable, and ownable by the agent. Actions: 'remember' to store a new fact or observation, 'recall' to search your memories by keyword, 'reflect' to get an overview of everything you know.",
+  "description": "Portable agent memory service. Use this to persistently remember facts, recall past context, or reflect on your memory history. Memories are version-controlled markdown files you own. Call with your agent username as agentId.",
   "parameters": {
     "type": "object",
     "properties": {
+      "agentId": {
+        "type": "string",
+        "description": "Your agent username (e.g. 'my-agent'). This scopes your memory so only you can access it."
+      },
       "action": {
         "type": "string",
         "enum": ["remember", "recall", "reflect"],
-        "description": "The memory operation: 'remember' stores a fact, 'recall' searches memories, 'reflect' shows memory overview and history"
+        "description": "'remember' stores a fact, 'recall' searches your memories, 'reflect' shows overview + history"
       },
       "content": {
         "type": "string",
-        "description": "For 'remember': the fact or observation to store. For 'recall': the search query. Not needed for 'reflect'."
+        "description": "For remember: the fact to store. For recall: search query. Not needed for reflect."
       },
       "category": {
         "type": "string",
         "enum": ["notes", "interactions", "preferences"],
-        "description": "Optional category to organize memories. 'notes' for general facts, 'interactions' for event logs, 'preferences' for patterns and habits."
+        "description": "Optional. 'notes' for facts, 'interactions' for event logs, 'preferences' for habits/patterns."
       }
     },
-    "required": ["action"]
+    "required": ["agentId", "action"]
   }
 }
