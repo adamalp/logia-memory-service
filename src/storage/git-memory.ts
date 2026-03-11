@@ -40,8 +40,10 @@ async function getAgentRepo(agentId: string): Promise<{
   const safeId = agentId.replace(/[^a-zA-Z0-9_-]/g, "_");
   const dir = join(MEMORY_BASE, safeId);
 
-  if (!existsSync(dir)) {
-    await mkdir(dir, { recursive: true });
+  await mkdir(dir, { recursive: true });
+  const gitDir = join(dir, ".git");
+
+  if (!existsSync(gitDir)) {
     const git = simpleGit(dir);
     await git.init();
     await git.addConfig("user.email", "logia-memory@join39.org");
