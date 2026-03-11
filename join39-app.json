@@ -1,0 +1,24 @@
+{
+  "name": "logia_memory",
+  "description": "Portable agent memory service. Use this tool to persistently store facts, recall past context by searching memories, or reflect on your full memory history. Memories are stored as version-controlled markdown files — portable, human-readable, and ownable by the agent. Actions: 'remember' to store a new fact or observation, 'recall' to search your memories by keyword, 'reflect' to get an overview of everything you know.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "action": {
+        "type": "string",
+        "enum": ["remember", "recall", "reflect"],
+        "description": "The memory operation: 'remember' stores a fact, 'recall' searches memories, 'reflect' shows memory overview and history"
+      },
+      "content": {
+        "type": "string",
+        "description": "For 'remember': the fact or observation to store. For 'recall': the search query. Not needed for 'reflect'."
+      },
+      "category": {
+        "type": "string",
+        "enum": ["notes", "interactions", "preferences"],
+        "description": "Optional category to organize memories. 'notes' for general facts, 'interactions' for event logs, 'preferences' for patterns and habits."
+      }
+    },
+    "required": ["action"]
+  }
+}
