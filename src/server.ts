@@ -11,6 +11,12 @@ export const app = new Hono();
 
 app.use("*", cors());
 
+// Global error handler — surface real errors instead of "Internal Server Error"
+app.onError((err, c) => {
+  console.error("Unhandled error:", err);
+  return c.json({ error: err.message }, 500);
+});
+
 // Health check
 app.get("/", (c) => c.json({ status: "ok", service: "logia-memory" }));
 
